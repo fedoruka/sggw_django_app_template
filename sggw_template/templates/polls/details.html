@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+
+{% block "content" %}
+
+<div class="card">
+    <div class="card-header">
+        {{ poll.title }}
+    </div>
+    <div class="card-body">
+        <blockquote class="blockquote mb-0">
+            <p>{{ poll.question }}</p>
+            <footer class="blockquote-footer">{{ poll.created_at }}</footer>
+        </blockquote>
+    </div>
+</div>
+
+<div>
+    <form action="/{{ poll.id }}/" method="post">
+        {% csrf_token %}
+
+        {% for option in poll.options %}
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="vote" value="{{ option.id }}" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                {{ option.text }}
+
+                {% if poll.voted %}
+                <b> - {{ option.votes }} votes </b>
+                {% endif %}
+            </label>
+        </div>
+        {% endfor %}
+        
+        {% if not poll.voted %}
+        <button type="submit" class="btn btn-primary mb-3">Vote!</button>
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}

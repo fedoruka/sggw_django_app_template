@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block "content" %}
+
+<div class="card-group">
+
+    {% for poll in polls %}
+
+    <div class="card" style="max-width: 18rem; margin: 1rem;">
+        {% if poll.image_url %}
+        <img src="{{ poll.image_url }}" class="card-img-top">
+        {% else %}
+        <img src="https://ps.w.org/kama-thumbnail/assets/icon-256x256.png?rev=2836004" class="card-img-top" alt="...">
+        {% endif %}
+
+        <div class="card-body">
+            <h5 class="card-title">
+                {{ poll.title }}
+            </h5>
+            <p class="card-text">{{ poll.question }}</p>
+            <a href="/{{ poll.id }}" class="btn btn-primary">Open poll</a>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
